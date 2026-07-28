@@ -1,4 +1,4 @@
-from src.rag.indexing import main
+from src.rag.indexing_db import main
 
 if __name__ == "__main__":
     print("Indexing PDF files in the 'media' directory...")
