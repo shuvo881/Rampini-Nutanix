@@ -1,0 +1,19 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pytest_cache/
+.pytest_cache/
+.python-version
+.venv/
+venv/
+
+# Environment files
+.env
+
+# Local caches
+cache/
+
+# Editor directories
+.vscode/
