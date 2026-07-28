@@ -1,34 +1,72 @@
+import os
+import httpx
+from dotenv import load_dotenv
 from langchain_community.document_loaders import PyPDFDirectoryLoader
-from langchain_core.vectorstores import InMemoryVectorStore
-from langchain_openai import OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
+load_dotenv()
 
-def index_pdf_directory(directory_path: str):
-    """Load all PDF files from a directory, split them, and index them into a vector store."""
-    # 1. Load PDF files from the media directory
-    loader = PyPDFDirectoryLoader(directory_path)
+NAI_ENDPOINT = os.getenv("NAI_ENDPOINT")
+NAI_API_KEY = os.getenv("NAI_API_KEY")
+EMBED_MODEL = os.getenv("EMBED_MODEL")
+
+
+def get_embedding(text: str):
+    url = f"{NAI_ENDPOINT}/embeddings"
+
+    headers = {
+        "Authorization": f"Bearer {NAI_API_KEY}",
+        "Content-Type": "application/json",
+    }
+
+    payload = {
+        "model": EMBED_MODEL,
+        "input": text,
+        "input_type": "string",
+    }
+
+    response = httpx.post(
+        url,
+        headers=headers,
+        json=payload,
+        timeout=60,
+        verify=False,  # Remove if your certificate is valid
+    )
+
+    print("Status:", response.status_code)
+    print(response.text)
+
+    response.raise_for_status()
+
+    return response.json()["data"][0]["embedding"]
+
+
+def main():
+    loader = PyPDFDirectoryLoader("./media")
     docs = loader.load()
 
-    # 2. Split documents into smaller chunks
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000, chunk_overlap=200, add_start_index=True
-    )
-    all_splits = text_splitter.split_documents(docs)
+    print("Pages:", len(docs))
 
-    # 3. Initialize embeddings and vector store
-    embeddings = OpenAIEmbeddings(
-        base_url="http://localhost:11434/v1",
-        api_key="your-api-key",
-        model="nomic-embed-text",
-    )
-    vector_store = InMemoryVectorStore.from_documents(
-        documents=all_splits, embedding=embeddings
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1000,
+        chunk_overlap=200,
     )
 
-    print(f"Successfully indexed {len(all_splits)} chunks from {len(docs)} PDF pages.")
-    return vector_store
+    splits = splitter.split_documents(docs)
+
+    splits = [d for d in splits if d.page_content.strip()]
+
+    print("Chunks:", len(splits))
+
+    for i, doc in enumerate(splits):
+        print(f"\nEmbedding chunk {i+1}/{len(splits)}")
+
+        embedding = get_embedding(doc.page_content)
+
+        print("Embedding dimension:", len(embedding))
+
+    print("\nDone!")
 
 
-# Example usage:
-vector_store = index_pdf_directory("./media")
+if __name__ == "__main__":
+    main()
