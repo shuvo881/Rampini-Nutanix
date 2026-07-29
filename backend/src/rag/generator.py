@@ -4,13 +4,14 @@ from src.rag.milvus_db import get_client
 from src.rag.config import MILVUS_COLLECTION
 
 
-client = get_client()
+
 
 
 def search(question: str, limit: int = 5) -> str:
     """Search relevant documents from Milvus."""
 
     emb = get_embedding(question)
+    client = get_client()
 
     results = client.search(
         collection_name=MILVUS_COLLECTION,

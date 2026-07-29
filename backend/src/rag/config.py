@@ -3,6 +3,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Media
+MEDIA_DIR = os.getenv("MEDIA_DIR", "media")
+RAG_DOCS_DIR = os.getenv("RAG_DOCS_DIR")
+
 # NAI
 NAI_ENDPOINT = os.getenv("NAI_ENDPOINT")
 NAI_API_KEY = os.getenv("NAI_API_KEY")
