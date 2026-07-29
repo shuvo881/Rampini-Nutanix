@@ -1,6 +1,9 @@
-from src.rag.indexing import main
+import uvicorn
 
 if __name__ == "__main__":
-    print("Indexing PDF files in the 'media' directory...")
-    vector_store = main()
-    print("Indexing completed.")
+    uvicorn.run(
+        "src.api.app:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True,
+    )

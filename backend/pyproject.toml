@@ -13,4 +13,8 @@ dependencies = [
     "langchain-text-splitters>=1.1.2",
     "langchain-community>=0.4.2",
     "pypdf>=6.14.2",
+    "pymilvus>=3.0.0",
+    "uvicorn>=0.51.0",
+    "fastapi>=0.140.13",
+    "python-multipart>=0.0.32",
 ]
