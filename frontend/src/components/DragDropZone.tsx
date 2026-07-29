@@ -29,24 +29,42 @@ export default function DragDropZone({ onUploadSuccess }: DragDropZoneProps) {
     e.stopPropagation();
   };
 
-  const uploadFile = async (file: File) => {
+  const uploadFiles = async (files: FileList | File[]) => {
     setIsUploading(true);
-    // Mock API integration
     try {
-      console.log("Uploading file to Documents API...", file.name);
-      // Simulate network request
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const formData = new FormData();
+      const fileArray = Array.from(files);
       
-      const newDoc: Document = {
-        id: Math.random().toString(36).substr(2, 9),
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        uploadedAt: new Date().toISOString()
-      };
+      fileArray.forEach(file => {
+        formData.append("files", file);
+      });
       
-      if (onUploadSuccess) {
-        onUploadSuccess(newDoc);
+      console.log("Uploading files to Documents API...", fileArray.map(f => f.name));
+      
+      const response = await fetch("http://localhost:8000/documents/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Upload failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      if (data.success && onUploadSuccess) {
+        fileArray.forEach(file => {
+          if (data.uploaded_files.includes(file.name)) {
+            const newDoc: Document = {
+              id: Math.random().toString(36).substring(2, 11),
+              name: file.name,
+              size: file.size,
+              type: file.type,
+              uploadedAt: new Date().toISOString()
+            };
+            onUploadSuccess(newDoc);
+          }
+        });
       }
     } catch (error) {
       console.error("Upload failed", error);
@@ -61,14 +79,13 @@ export default function DragDropZone({ onUploadSuccess }: DragDropZoneProps) {
     setIsDragActive(false);
 
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const file = e.dataTransfer.files[0];
-      uploadFile(file);
+      uploadFiles(e.dataTransfer.files);
     }
   };
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      uploadFile(e.target.files[0]);
+      uploadFiles(e.target.files);
     }
   };
 
@@ -94,6 +111,7 @@ export default function DragDropZone({ onUploadSuccess }: DragDropZoneProps) {
         style={{ display: "none" }}
         onChange={handleFileInput}
         accept=".pdf,.png,.jpg,.jpeg,.doc,.docx"
+        multiple
       />
     </div>
   );
