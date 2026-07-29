@@ -38,17 +38,36 @@ export default function ChatInterface() {
     setInputValue("");
     setIsTyping(true);
 
-    // Mock Chat API Call
+    // Call real Chat API
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      const response = await fetch("/api/chat/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ question: inputValue }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Chat API failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+
       const botResponse = {
         id: (Date.now() + 1).toString(),
-        text: "I received your message. I'm currently a mockup, but soon I'll connect to the real Nutanix Chat API!",
+        text: data.answer || "Sorry, I didn't get an answer.",
         isUser: false,
       };
       setMessages((prev) => [...prev, botResponse]);
     } catch (error) {
       console.error("Chat error:", error);
+      const errorResponse = {
+        id: (Date.now() + 1).toString(),
+        text: "Sorry, I encountered an error while processing your request.",
+        isUser: false,
+      };
+      setMessages((prev) => [...prev, errorResponse]);
     } finally {
       setIsTyping(false);
     }
