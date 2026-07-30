@@ -2,17 +2,17 @@ import httpx
 
 from src.rag.config import (
     CHAT_MODEL,
-    NAI_API_KEY,
-    NAI_ENDPOINT,
+    CHAT_MODEL_API_KEY,
+    CHAT_MODEL_ENDPOINT,
 )
 
 
 def generate(prompt: str):
 
     response = httpx.post(
-        f"{NAI_ENDPOINT}/chat/completions",
+        f"{CHAT_MODEL_ENDPOINT}",
         headers={
-            "Authorization": f"Bearer {NAI_API_KEY}",
+            "Authorization": f"Bearer {CHAT_MODEL_API_KEY}",
             "Content-Type": "application/json",
         },
         json={
@@ -25,7 +25,7 @@ def generate(prompt: str):
             ],
             "temperature": 0,
         },
-        timeout=120,
+        timeout=600,
         verify=False,
     )
 

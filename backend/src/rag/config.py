@@ -11,6 +11,9 @@ RAG_DOCS_DIR = os.getenv("RAG_DOCS_DIR")
 NAI_ENDPOINT = os.getenv("NAI_ENDPOINT")
 NAI_API_KEY = os.getenv("NAI_API_KEY")
 EMBED_MODEL = os.getenv("EMBED_MODEL")
+
+CHAT_MODEL_ENDPOINT = os.getenv("CHAT_MODEL_ENDPOINT")
+CHAT_MODEL_API_KEY = os.getenv("CHAT_MODEL_API_KEY")
 CHAT_MODEL = os.getenv("CHAT_MODEL")
 
 # Milvus
