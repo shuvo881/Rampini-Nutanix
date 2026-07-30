@@ -25,7 +25,7 @@ def generate(prompt: str):
             ],
             "temperature": 0,
         },
-        timeout=120,
+        timeout=600,
         verify=False,
     )
 
