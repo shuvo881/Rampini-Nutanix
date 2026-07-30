@@ -43,7 +43,7 @@ export default function ChatInterface() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 600000); // 10 minutes timeout
 
-      const response = await fetch("/api/chat/generate", {
+      const response = await fetch(process.env.NEXT_PUBLIC_CHAT_API_PATH || "/api/chat/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

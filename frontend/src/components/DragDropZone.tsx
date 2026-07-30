@@ -41,7 +41,7 @@ export default function DragDropZone({ onUploadSuccess }: DragDropZoneProps) {
       
       console.log("Uploading files to Documents API...", fileArray.map(f => f.name));
       
-      const response = await fetch("/api/documents/upload", {
+      const response = await fetch(process.env.NEXT_PUBLIC_DOCUMENTS_API_PATH || "/api/documents/upload", {
         method: "POST",
         body: formData,
       });
