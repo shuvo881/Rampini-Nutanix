@@ -40,13 +40,19 @@ export default function ChatInterface() {
 
     // Call real Chat API
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 600000); // 10 minutes timeout
+
       const response = await fetch("/api/chat/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ question: inputValue }),
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         throw new Error(`Chat API failed with status ${response.status}`);
@@ -79,7 +85,7 @@ export default function ChatInterface() {
         <div className={styles.statusIndicator}></div>
         AI Assistant
       </div>
-      
+
       <div className={styles.messagesArea}>
         {messages.map((msg) => (
           <div
@@ -106,8 +112,8 @@ export default function ChatInterface() {
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
         />
-        <button 
-          className={styles.sendButton} 
+        <button
+          className={styles.sendButton}
           onClick={handleSendMessage}
           disabled={!inputValue.trim() || isTyping}
         >
