@@ -13,11 +13,8 @@ spec:
 
   rules:
     - host: rampini-adminuser05-10-38-62-50.sslip.nutanixdemo.com
-
       http:
         paths:
-
-          # Backend API
           - path: /api
             pathType: Prefix
             backend:
@@ -26,7 +23,6 @@ spec:
                 port:
                   number: 8000
 
-          # Frontend
           - path: /
             pathType: Prefix
             backend:

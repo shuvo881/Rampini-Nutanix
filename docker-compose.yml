@@ -1,10 +1,10 @@
 version: "3.9"
 services:
-  backend:
+  backend-service:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: rampini-backend:latest
+    image: mdgolammostofa705/rampini-backend:v2
     ports:
       - "8000:8000"
     env_file:
@@ -17,14 +17,14 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        BACKEND_URL: http://backend:8000
-    image: rampini-frontend:latest
+        BACKEND_URL: http://backend-service:8000
+    image: mdgolammostofa705/rampini-frontend:v4
     ports:
       - "3000:3000"
     env_file:
       - ./frontend/.env
     environment:
       NODE_ENV: production
-      BACKEND_URL: http://backend:8000
+      BACKEND_URL: http://backend-service:8000
     depends_on:
-      - backend
+      - backend-service

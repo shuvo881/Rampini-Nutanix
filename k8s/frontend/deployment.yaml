@@ -22,7 +22,7 @@ spec:
       containers:
         - name: frontend
 
-          image: mdgolammostofa705/rampini-frontend:v2
+          image: mdgolammostofa705/rampini-frontend:v3
           imagePullPolicy: Always
 
           ports:

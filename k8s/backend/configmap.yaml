@@ -5,13 +5,13 @@ metadata:
   namespace: rampini
 
 data:
-  CHAT_MODEL_ENDPOINT: "https://10-38-30-49.sslip.nutanixdemo.com/enterpriseai/v1/chat/completions"
-  CHAT_MODEL: "llama3.2-1b"
+  CHAT_MODEL_ENDPOINT: "https://10-38-62-49.sslip.nutanixdemo.com/enterpriseai/v1/chat/completions"
+  CHAT_MODEL: "test-endpoint"
 
-  NAI_ENDPOINT: "https://nai.hpoc.nutanix.com:443/api/v1"
-  EMBED_MODEL: "llama-3-2-embed"
+  NAI_ENDPOINT: "https://10-38-62-49.sslip.nutanixdemo.com/enterpriseai/v1/"
+  EMBED_MODEL: "test-model-embd-ept"
 
-  MILVUS_URI: "https://milvus-adminuser05-10-38-30-50.sslip.nutanixdemo.com"
+  MILVUS_URI: "https://milvus-adminuser05-10-38-62-50.sslip.nutanixdemo.com"
   MILVUS_DATABASE: "test"
   MILVUS_COLLECTION: "test_collection4"
 
