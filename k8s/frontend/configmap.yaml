@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+  namespace: rampini
+
+data:
+  NODE_ENV: "production"
+
+  # Kubernetes Service name
+  BACKEND_URL: "http://backend-service:8000"
+
+  NEXT_PUBLIC_CHAT_API_PATH: "/api/chat/generate"
+  NEXT_PUBLIC_DOCUMENTS_API_PATH: "/api/documents/upload"
