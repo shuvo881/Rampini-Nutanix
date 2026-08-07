@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: frontend-config
-  namespace: rampini
+  namespace: rampini-rag
 
 data:
   NODE_ENV: "production"

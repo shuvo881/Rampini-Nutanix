@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: backend-config
-  namespace: rampini
+  namespace: rampini-rag
 
 data:
   CHAT_MODEL_ENDPOINT: "https://10-38-62-49.sslip.nutanixdemo.com/enterpriseai/v1/chat/completions"

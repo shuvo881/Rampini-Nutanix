@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
-  namespace: rampini
+  namespace: rampini-rag
   labels:
     app: backend
 

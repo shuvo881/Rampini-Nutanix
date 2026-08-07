@@ -3,7 +3,7 @@ kind: Service
 
 metadata:
   name: backend-service
-  namespace: rampini
+  namespace: rampini-rag
   labels:
     app: backend
 
