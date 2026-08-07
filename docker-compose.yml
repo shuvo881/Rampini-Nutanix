@@ -4,7 +4,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: mdgolammostofa705/rampini-backend:v2
+    image: mdgolammostofa705/rampini-backend:v11
     ports:
       - "8000:8000"
     env_file:
@@ -18,7 +18,7 @@ services:
       dockerfile: Dockerfile
       args:
         BACKEND_URL: http://backend-service:8000
-    image: mdgolammostofa705/rampini-frontend:v4
+    image: mdgolammostofa705/rampini-frontend:v11
     ports:
       - "3000:3000"
     env_file:
