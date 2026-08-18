@@ -41,6 +41,7 @@ def load_documents_from_bucket(bucket_name=None):
     return splitter.split_documents(docs)
 
 def load_and_split(local_path: str):
+    print(f"Loading and splitting documents from: {local_path}")
     loader = PyPDFLoader(local_path)
     docs = loader.load()
 

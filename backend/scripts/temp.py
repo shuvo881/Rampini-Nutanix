@@ -1,4 +1,4 @@
-from src.storage.objectStore import upload_file, download_file, download_all_files
+from backend.src.storage.object_store import upload_file, download_file, download_all_files
 from dotenv import load_dotenv
 import os
 

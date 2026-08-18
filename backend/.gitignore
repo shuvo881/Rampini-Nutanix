@@ -219,6 +219,7 @@ __marimo__/
 logs/
 *.sqlite
 *.sqlite3
+bucket_files.sqlite3
 
 # ignore the Media directory and its contents
 media/
