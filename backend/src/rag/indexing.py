@@ -1,14 +1,14 @@
 from src.rag.embedding import get_embedding
-from src.rag.document_loader import load_documents
+from src.rag.document_loader import load_and_split
 from src.rag.milvus_db import get_client
 from src.rag.config import MILVUS_COLLECTION
 
 
-def index_documents():
+def index_documents(local_path: str = None):
     """Load documents, generate embeddings, and insert them into Milvus."""
 
     client = get_client()
-    docs = load_documents()
+    docs = load_and_split(local_path=local_path)
 
     data = []
 
