@@ -42,6 +42,8 @@ def _loop(on_new_file=None):
             _poll_once(on_new_file)
         except Exception as e:
             print(f"Error polling bucket: {e}")
+        print("Stopping watcher thread.")
+        break
         time.sleep(POLL_INTERVAL_SECONDS)
 
 

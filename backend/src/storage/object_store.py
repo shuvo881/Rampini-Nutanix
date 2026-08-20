@@ -27,6 +27,10 @@ def download_file(object_key, local_save_path=None, bucket_name=BUCKET_NAME):
     if local_save_path is None:
         local_save_path = object_key
 
+    parent_dir = os.path.dirname(local_save_path)
+    if parent_dir:
+        os.makedirs(parent_dir, exist_ok=True)
+
     s3.download_file(bucket_name, object_key, local_save_path)
     print(f"Downloaded s3://{bucket_name}/{object_key} to '{local_save_path}'")
     return local_save_path
